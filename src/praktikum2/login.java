@@ -2,7 +2,10 @@
 package praktikum2;
 
 import java.awt.event.KeyEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import javax.swing.JOptionPane;
+import java.sql.Statement;
 
 public class login extends javax.swing.JFrame {
 
@@ -11,6 +14,22 @@ public class login extends javax.swing.JFrame {
         initComponents();
     }
 
+    public static Connection con;
+    public static Statement stm; {
+        try {
+            String url ="jdbc:mysql://localhost/rentalmobil";
+            String user="root";
+            String pass="";
+            Class.forName("com.mysql.jdbc.Driver");
+            con =DriverManager.getConnection(url,user,pass);
+            stm = con.createStatement();
+            System.out.println("koneksi berhasil;");
+        } catch (Exception e) {
+            System.err.println("koneksi gagal" +e.getMessage());
+        }
+    }
+
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -165,6 +184,7 @@ public class login extends javax.swing.JFrame {
                 new login().setVisible(true);
             }
         });
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
