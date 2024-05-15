@@ -1,10 +1,21 @@
 
 package praktikum2;
 
+import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.PreparedStatement;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import java.text.SimpleDateFormat;
+
+
 public class datamobil extends javax.swing.JFrame {
 
     public datamobil() {
         initComponents();
+        updateTableData();
     }
 
 
@@ -18,18 +29,18 @@ public class datamobil extends javax.swing.JFrame {
         LabelTahunProduksi = new javax.swing.JLabel();
         LabelNoPolisi = new javax.swing.JLabel();
         LabelHargaSewa = new javax.swing.JLabel();
-        textTahunProduksi = new javax.swing.JTextField();
         textNoPolisi = new javax.swing.JTextField();
         textHargaSewa = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnTambah = new javax.swing.JButton();
+        btnEdit = new javax.swing.JButton();
+        btnSimpan = new javax.swing.JButton();
         btnKembali = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btnHapus = new javax.swing.JButton();
         DropDown = new javax.swing.JComboBox<>();
         textMerkMobil = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableOutput = new javax.swing.JTable();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -46,17 +57,22 @@ public class datamobil extends javax.swing.JFrame {
 
         LabelHargaSewa.setText("Harga Sewa");
 
-        jButton1.setBackground(new java.awt.Color(66, 120, 204));
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Tambah");
+        btnTambah.setBackground(new java.awt.Color(66, 120, 204));
+        btnTambah.setForeground(new java.awt.Color(255, 255, 255));
+        btnTambah.setText("Tambah");
 
-        jButton2.setBackground(new java.awt.Color(66, 120, 204));
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Edit");
+        btnEdit.setBackground(new java.awt.Color(66, 120, 204));
+        btnEdit.setForeground(new java.awt.Color(255, 255, 255));
+        btnEdit.setText("Edit");
 
-        jButton3.setBackground(new java.awt.Color(66, 120, 204));
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("Simpan");
+        btnSimpan.setBackground(new java.awt.Color(66, 120, 204));
+        btnSimpan.setForeground(new java.awt.Color(255, 255, 255));
+        btnSimpan.setText("Simpan");
+        btnSimpan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSimpanActionPerformed(evt);
+            }
+        });
 
         btnKembali.setBackground(new java.awt.Color(66, 120, 204));
         btnKembali.setForeground(new java.awt.Color(255, 255, 255));
@@ -67,9 +83,9 @@ public class datamobil extends javax.swing.JFrame {
             }
         });
 
-        jButton5.setBackground(new java.awt.Color(255, 0, 0));
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setText("Hapus");
+        btnHapus.setBackground(new java.awt.Color(255, 0, 0));
+        btnHapus.setForeground(new java.awt.Color(255, 255, 255));
+        btnHapus.setText("Hapus");
 
         DropDown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Porsche", "Lamborghini", "Bugatti", "Corvette", "Mazda" }));
         DropDown.addActionListener(new java.awt.event.ActionListener() {
@@ -98,39 +114,38 @@ public class datamobil extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(61, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(161, 161, 161))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(LabelTypeMobil, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(labelMerkMobil, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(41, 41, 41)
+                            .addGap(53, 53, 53)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(textMerkMobil)
-                                .addComponent(DropDown, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(DropDown, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(textMerkMobil)))
                         .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(LabelNoPolisi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(LabelHargaSewa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(LabelTahunProduksi))
-                            .addGap(44, 44, 44)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(textNoPolisi)
-                                .addComponent(textTahunProduksi)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(textNoPolisi, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, 303, Short.MAX_VALUE)
                                 .addComponent(textHargaSewa)))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(jButton1)
+                            .addComponent(btnTambah)
                             .addGap(18, 18, 18)
-                            .addComponent(jButton2)
+                            .addComponent(btnEdit)
                             .addGap(18, 18, 18)
-                            .addComponent(jButton3)
+                            .addComponent(btnSimpan)
                             .addGap(18, 18, 18)
-                            .addComponent(jButton5)
+                            .addComponent(btnHapus)
                             .addGap(18, 18, 18)
-                            .addComponent(btnKembali)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel1)
-                        .addGap(161, 161, 161)))
+                            .addComponent(btnKembali))))
                 .addGap(43, 43, 43)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19))
@@ -154,7 +169,7 @@ public class datamobil extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(LabelTahunProduksi)
-                    .addComponent(textTahunProduksi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(LabelNoPolisi)
@@ -165,10 +180,10 @@ public class datamobil extends javax.swing.JFrame {
                     .addComponent(textHargaSewa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(61, 61, 61)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton5)
+                    .addComponent(btnTambah)
+                    .addComponent(btnEdit)
+                    .addComponent(btnSimpan)
+                    .addComponent(btnHapus)
                     .addComponent(btnKembali))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -190,6 +205,75 @@ public class datamobil extends javax.swing.JFrame {
     this.dispose();
     }//GEN-LAST:event_btnKembaliActionPerformed
 
+    private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
+    String merek = textMerkMobil.getText();
+    String type = DropDown.getSelectedItem().toString();
+    java.util.Date tanggalProduksi = jDateChooser1.getDate();
+    String tahunProduksi = new SimpleDateFormat("yyyy-MM-dd").format(tanggalProduksi);
+    String noPolisi = textNoPolisi.getText();
+    String hargaSewa = textHargaSewa.getText();
+    
+    // Menyimpan data ke database MySQL
+    try {
+        Connection conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/rentalmobil", "root", "");
+        
+        String query = "INSERT INTO datamobil (merek_mobil, type, tahun_produksi, no_polisi, harga_sewa) VALUES (?, ?, ?, ?, ?)";
+        PreparedStatement preparedStatement = (PreparedStatement) conn.prepareStatement(query);
+        preparedStatement.setString(1, merek);
+        preparedStatement.setString(2, type);
+        preparedStatement.setString(3, tahunProduksi);
+        preparedStatement.setString(4, noPolisi);
+        preparedStatement.setString(5, hargaSewa);
+        
+        int rowsInserted = preparedStatement.executeUpdate();
+        if (rowsInserted > 0) {
+            System.out.println("Data berhasil Disimpan!");
+            JOptionPane.showMessageDialog(null, "Data berhasil disimpan!");
+            textMerkMobil.setText("");
+            jDateChooser1.setDate(null);
+            textNoPolisi.setText("");
+            textHargaSewa.setText("");
+            
+            // Memperbarui tampilan tabel dengan data terbaru
+            updateTableData();
+        }
+        
+        conn.close();
+    } catch (SQLException e) {
+        System.out.println("Data gagal Disimpan!");
+        JOptionPane.showMessageDialog(null, "Terjadi kesalahan saat menyimpan data ke database: " + e.getMessage());
+    }
+}
+
+private void updateTableData() {
+    try {
+        Connection conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/rentalmobil", "root", "");
+        String query = "SELECT * FROM datamobil";
+        PreparedStatement preparedStatement = (PreparedStatement) conn.prepareStatement(query);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        
+        // Menghapus semua baris dari model tabel
+        DefaultTableModel model = (DefaultTableModel) tableOutput.getModel();
+        model.setRowCount(0);
+        
+        // Menambahkan baris baru ke model tabel dengan data dari database
+        while (resultSet.next()) {
+            Object[] rowData = {
+                resultSet.getString("merek_mobil"),
+                resultSet.getString("type"),
+                resultSet.getString("tahun_produksi"),
+                resultSet.getString("no_polisi"),
+                resultSet.getString("harga_sewa")
+            };
+            model.addRow(rowData);
+        }
+        
+        conn.close();
+    } catch (SQLException e) {
+        System.out.println("Gagal memperbarui tabel: " + e.getMessage());
+    }
+    }//GEN-LAST:event_btnSimpanActionPerformed
+
 
     public static void main(String args[]) {
 
@@ -206,11 +290,12 @@ public class datamobil extends javax.swing.JFrame {
     private javax.swing.JLabel LabelNoPolisi;
     private javax.swing.JLabel LabelTahunProduksi;
     private javax.swing.JLabel LabelTypeMobil;
+    private javax.swing.JButton btnEdit;
+    private javax.swing.JButton btnHapus;
     private javax.swing.JButton btnKembali;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton btnSimpan;
+    private javax.swing.JButton btnTambah;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelMerkMobil;
@@ -218,6 +303,5 @@ public class datamobil extends javax.swing.JFrame {
     private javax.swing.JTextField textHargaSewa;
     private javax.swing.JTextField textMerkMobil;
     private javax.swing.JTextField textNoPolisi;
-    private javax.swing.JTextField textTahunProduksi;
     // End of variables declaration//GEN-END:variables
 }
