@@ -1,5 +1,5 @@
 
-package praktikum2;
+package praktikum;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.text.SimpleDateFormat;
+import java.sql.ResultSetMetaData;
+
 
 
 public class datamobil extends javax.swing.JFrame {
@@ -64,6 +66,11 @@ public class datamobil extends javax.swing.JFrame {
         btnEdit.setBackground(new java.awt.Color(66, 120, 204));
         btnEdit.setForeground(new java.awt.Color(255, 255, 255));
         btnEdit.setText("Edit");
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditActionPerformed(evt);
+            }
+        });
 
         btnSimpan.setBackground(new java.awt.Color(66, 120, 204));
         btnSimpan.setForeground(new java.awt.Color(255, 255, 255));
@@ -86,6 +93,11 @@ public class datamobil extends javax.swing.JFrame {
         btnHapus.setBackground(new java.awt.Color(255, 0, 0));
         btnHapus.setForeground(new java.awt.Color(255, 255, 255));
         btnHapus.setText("Hapus");
+        btnHapus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHapusActionPerformed(evt);
+            }
+        });
 
         DropDown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Porsche", "Lamborghini", "Bugatti", "Corvette", "Mazda" }));
         DropDown.addActionListener(new java.awt.event.ActionListener() {
@@ -94,6 +106,8 @@ public class datamobil extends javax.swing.JFrame {
             }
         });
 
+        tableOutput.setBackground(new java.awt.Color(204, 204, 204));
+        tableOutput.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         tableOutput.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -245,34 +259,92 @@ public class datamobil extends javax.swing.JFrame {
     }
 }
 
-private void updateTableData() {
-    try {
-        Connection conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/rentalmobil", "root", "");
-        String query = "SELECT * FROM datamobil";
-        PreparedStatement preparedStatement = (PreparedStatement) conn.prepareStatement(query);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        
-        // Menghapus semua baris dari model tabel
-        DefaultTableModel model = (DefaultTableModel) tableOutput.getModel();
-        model.setRowCount(0);
-        
-        // Menambahkan baris baru ke model tabel dengan data dari database
-        while (resultSet.next()) {
-            Object[] rowData = {
-                resultSet.getString("merek_mobil"),
-                resultSet.getString("type"),
-                resultSet.getString("tahun_produksi"),
-                resultSet.getString("no_polisi"),
-                resultSet.getString("harga_sewa")
-            };
-            model.addRow(rowData);
+   private void updateTableData() {
+        try (Connection conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/rentalmobil", "root", "")) {
+            String query = "SELECT * FROM datamobil";
+            try (PreparedStatement preparedStatement = (PreparedStatement) conn.prepareStatement(query);
+                 ResultSet resultSet = preparedStatement.executeQuery()) {
+
+                // Retrieve column names dynamically from the ResultSetMetaData
+                ResultSetMetaData metaData = resultSet.getMetaData();
+                int columnCount = metaData.getColumnCount();
+                String[] columnNames = new String[columnCount];
+                for (int i = 1; i <= columnCount; i++) {
+                    columnNames[i - 1] = metaData.getColumnName(i);
+                }
+
+                // Create a new table model with the column names
+                DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+
+                // Add rows to the model
+                while (resultSet.next()) {
+                    Object[] rowData = new Object[columnCount];
+                    for (int i = 1; i <= columnCount; i++) {
+                        rowData[i - 1] = resultSet.getObject(i);
+                    }
+                    model.addRow(rowData);
+                }
+
+                // Set the new model to the table
+                tableOutput.setModel(model);
+            }
+        } catch (SQLException e) {
+            System.out.println("Gagal memperbarui tabel: " + e.getMessage());
         }
-        
-        conn.close();
-    } catch (SQLException e) {
-        System.out.println("Gagal memperbarui tabel: " + e.getMessage());
-    }
     }//GEN-LAST:event_btnSimpanActionPerformed
+
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEditActionPerformed
+
+    private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
+    // Mendapatkan indeks baris yang dipilih
+    int selectedRow = tableOutput.getSelectedRow();
+
+    // Pastikan ada baris yang dipilih
+    if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(this, "Pilih baris yang ingin dihapus");
+        return;
+    }
+
+    // Konfirmasi penghapusan
+    int option = JOptionPane.showConfirmDialog(this, "Anda yakin ingin menghapus baris ini?", "Konfirmasi Hapus", JOptionPane.YES_NO_OPTION);
+
+    if (option == JOptionPane.YES_OPTION) {
+        try {
+            // Menghubungkan ke database
+            Connection conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/rentalmobil", "root", "");
+
+            // Mendapatkan nilai kolom yang digunakan sebagai kriteria untuk penghapusan
+            String merekMobil = (String) tableOutput.getValueAt(selectedRow, 0);
+            String type = (String) tableOutput.getValueAt(selectedRow, 1);
+
+            // Membuat pernyataan SQL untuk menghapus baris dari tabel berdasarkan nilai kolom tertentu
+            String sql = "DELETE FROM datamobil WHERE merek_mobil = ? AND type = ?";
+            PreparedStatement statement = (PreparedStatement) conn.prepareStatement(sql);
+            statement.setString(1, merekMobil);
+            statement.setString(2, type);
+
+            // Mengeksekusi pernyataan DELETE
+            int rowsDeleted = statement.executeUpdate();
+            if (rowsDeleted > 0) {
+                System.out.println("Data berhasil dihapus!");
+                JOptionPane.showMessageDialog(this, "Data berhasil dihapus");
+                // Hapus baris dari model tabel
+                DefaultTableModel model = (DefaultTableModel) tableOutput.getModel();
+                model.removeRow(selectedRow);
+            } else {
+                JOptionPane.showMessageDialog(this, "Gagal menghapus Data");
+            }
+
+            // Tutup koneksi ke database
+            conn.close();
+        } catch (SQLException ex) {
+            System.out.println("Data gagal dihapus!");
+            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
+        }
+    }
+    }//GEN-LAST:event_btnHapusActionPerformed
 
 
     public static void main(String args[]) {

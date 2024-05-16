@@ -1,5 +1,5 @@
 
-package praktikum2;
+package praktikum;
 
 public class menu extends javax.swing.JFrame {
 
@@ -23,6 +23,7 @@ public class menu extends javax.swing.JFrame {
         btnExit = new javax.swing.JButton();
         ImageCar = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        btnDataMotor = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -54,6 +55,11 @@ public class menu extends javax.swing.JFrame {
         jButton5.setBackground(new java.awt.Color(66, 120, 204));
         jButton5.setForeground(new java.awt.Color(255, 255, 255));
         jButton5.setText("Data Konsumen");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jButton6.setBackground(new java.awt.Color(66, 120, 204));
         jButton6.setForeground(new java.awt.Color(255, 255, 255));
@@ -77,9 +83,18 @@ public class menu extends javax.swing.JFrame {
         });
 
         ImageCar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        ImageCar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/praktikum2/mobil.jpeg"))); // NOI18N
+        ImageCar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/praktikum/mobil.jpeg"))); // NOI18N
 
-        jLabel3.setText("RENTAL MOBIL JAKARTA & BALI");
+        jLabel3.setText("RENTAL MOBIL dan Motor JAKARTA & BALI");
+
+        btnDataMotor.setBackground(new java.awt.Color(66, 120, 204));
+        btnDataMotor.setForeground(new java.awt.Color(255, 255, 255));
+        btnDataMotor.setText("Data Motor");
+        btnDataMotor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDataMotorActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -99,30 +114,33 @@ public class menu extends javax.swing.JFrame {
                     .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnDataMotor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(33, 33, 33)
-                .addComponent(ImageCar, javax.swing.GroupLayout.PREFERRED_SIZE, 755, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ImageCar, javax.swing.GroupLayout.PREFERRED_SIZE, 755, Short.MAX_VALUE)
                 .addGap(87, 87, 87))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel3)
-                .addGap(442, 442, 442))
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(405, 405, 405))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(21, Short.MAX_VALUE)
+                .addContainerGap(18, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addGap(42, 42, 42)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(ImageCar, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(ImageCar, javax.swing.GroupLayout.PREFERRED_SIZE, 407, Short.MAX_VALUE)
                         .addGap(150, 150, 150))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(57, 57, 57)
                         .addComponent(btnDataMobil)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnDataMotor)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -137,7 +155,7 @@ public class menu extends javax.swing.JFrame {
                         .addComponent(jButton4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnExit)
-                        .addContainerGap(271, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         pack();
@@ -159,6 +177,16 @@ public class menu extends javax.swing.JFrame {
     this.dispose();
     }//GEN-LAST:event_btnExitActionPerformed
 
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void btnDataMotorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDataMotorActionPerformed
+    datamotor pagedatamobil = new datamotor();
+    pagedatamobil.setVisible(true);
+    this.dispose();
+    }//GEN-LAST:event_btnDataMotorActionPerformed
+
     public static void main(String args[]) {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -171,6 +199,7 @@ public class menu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel ImageCar;
     private javax.swing.JButton btnDataMobil;
+    private javax.swing.JButton btnDataMotor;
     private javax.swing.JButton btnExit;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;

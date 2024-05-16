@@ -1,5 +1,5 @@
 
-package praktikum2;
+package praktikum;
 
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
@@ -150,11 +150,13 @@ public class login extends javax.swing.JFrame {
                 JOptionPane.ERROR_MESSAGE);
     } else {
         if (user.equals("admin") && pass.equals("1234")) {
+            System.out.println("Login Berhasil");
             JOptionPane.showMessageDialog(null, "login berhasil");
             menu pagemenu = new menu();
             this.dispose();
             pagemenu.setVisible(true);
         } else {
+            System.out.println("Login Gagal");
             JOptionPane.showMessageDialog(null, "login gagal");
         }
     }
