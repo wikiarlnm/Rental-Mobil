@@ -28,8 +28,6 @@ public class login extends javax.swing.JFrame {
             System.err.println("koneksi gagal" +e.getMessage());
         }
     }
-
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

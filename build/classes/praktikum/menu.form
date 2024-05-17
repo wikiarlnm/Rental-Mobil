@@ -47,8 +47,8 @@
           </Group>
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="32767" attributes="0"/>
-              <Component id="jLabel3" min="-2" pref="234" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="405" max="-2" attributes="0"/>
+              <Component id="jLabel3" min="-2" pref="248" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="397" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -163,6 +163,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Data Pegawai"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton6ActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButton7">
       <Properties>

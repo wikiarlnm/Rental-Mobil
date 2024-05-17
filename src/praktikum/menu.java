@@ -64,6 +64,11 @@ public class menu extends javax.swing.JFrame {
         jButton6.setBackground(new java.awt.Color(66, 120, 204));
         jButton6.setForeground(new java.awt.Color(255, 255, 255));
         jButton6.setText("Data Pegawai");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         jButton7.setBackground(new java.awt.Color(66, 120, 204));
         jButton7.setForeground(new java.awt.Color(255, 255, 255));
@@ -121,8 +126,8 @@ public class menu extends javax.swing.JFrame {
                 .addGap(87, 87, 87))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(405, 405, 405))
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(397, 397, 397))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -178,14 +183,22 @@ public class menu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
+    datapegawai datakonsumenFrame = new datapegawai();
+    datakonsumenFrame.setVisible(true);
+    this.dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void btnDataMotorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDataMotorActionPerformed
-    datamotor pagedatamobil = new datamotor();
-    pagedatamobil.setVisible(true);
+    datamotor pagedatamotor = new datamotor();
+    pagedatamotor.setVisible(true);
     this.dispose();
     }//GEN-LAST:event_btnDataMotorActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    datapegawai pagedatapegawai = new datapegawai();
+    pagedatapegawai.setVisible(true);
+    this.dispose();
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     public static void main(String args[]) {
 
