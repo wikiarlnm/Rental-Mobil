@@ -77,6 +77,11 @@ public class menu extends javax.swing.JFrame {
         jButton8.setBackground(new java.awt.Color(66, 120, 204));
         jButton8.setForeground(new java.awt.Color(255, 255, 255));
         jButton8.setText("Data Transaksi");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
 
         btnExit.setBackground(new java.awt.Color(255, 0, 0));
         btnExit.setForeground(new java.awt.Color(255, 255, 255));
@@ -183,9 +188,7 @@ public class menu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-    datapegawai datakonsumenFrame = new datapegawai();
-    datakonsumenFrame.setVisible(true);
-    this.dispose();
+
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void btnDataMotorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDataMotorActionPerformed
@@ -199,6 +202,12 @@ public class menu extends javax.swing.JFrame {
     pagedatapegawai.setVisible(true);
     this.dispose();
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+    transaksisewamobil pagetransaksisewamobil = new transaksisewamobil();
+    pagetransaksisewamobil.setVisible(true);
+    this.dispose();
+    }//GEN-LAST:event_jButton8ActionPerformed
 
     public static void main(String args[]) {
 

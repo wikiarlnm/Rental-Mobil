@@ -10,6 +10,8 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.text.SimpleDateFormat;
 import java.sql.ResultSetMetaData;
+import java.text.ParseException;
+import java.util.Date;
 
 
 
@@ -294,7 +296,37 @@ public class datamobil extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSimpanActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        // TODO add your handling code here:
+            // Mendapatkan baris yang dipilih
+    int selectedRow = tableOutput.getSelectedRow();
+    
+    if (selectedRow != -1) { // Pastikan baris dipilih
+        // Mendapatkan nilai dari kolom yang dipilih
+        String merek = tableOutput.getValueAt(selectedRow, 0).toString();
+        String type = tableOutput.getValueAt(selectedRow, 1).toString();
+        String tahunProduksi = tableOutput.getValueAt(selectedRow, 2).toString();
+        String nopolisi = tableOutput.getValueAt(selectedRow, 3).toString();
+        String hargasewa = tableOutput.getValueAt(selectedRow, 4).toString();
+        
+        try {
+        // Assuming the date is in "yyyy" format, you can adjust the format if necessary
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = sdf.parse(tahunProduksi);
+        jDateChooser1.setDate(date);
+        } catch (ParseException e) {
+        e.printStackTrace();
+        jDateChooser1.setDate(null); // Resetting date if parsing fails
+    }
+        
+        // Mengisi nilai ke dalam field teks
+        textMerkMobil.setText(merek);
+        DropDown.setSelectedItem(type);
+        textNoPolisi.setText(nopolisi);
+        textHargaSewa.setText(hargasewa);
+        JOptionPane.showMessageDialog(null, "Data ter-edit!");
+    } else {
+        JOptionPane.showMessageDialog(null, "Silakan pilih baris yang ingin diedit!");
+    }
+    
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
