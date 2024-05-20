@@ -15,6 +15,7 @@ public class datapegawai extends javax.swing.JFrame {
 
     public datapegawai() {
         initComponents();
+        updateTableData();
     }
 
 

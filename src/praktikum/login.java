@@ -17,9 +17,9 @@ public class login extends javax.swing.JFrame {
     public static Connection con;
     public static Statement stm; {
         try {
-            String url ="jdbc:mysql://localhost/rentalmobil";
-                String user="root";
-            String pass="";
+            String url ="jdbc:mysql://sgx15.dewaweb.com:2083/wikiarln_rentalmobil";
+            String user="wikiarln_pv";
+            String pass="Xhinthink2024";
             Class.forName("com.mysql.jdbc.Driver");
             con =DriverManager.getConnection(url,user,pass);
             stm = con.createStatement();

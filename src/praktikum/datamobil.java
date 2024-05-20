@@ -17,6 +17,10 @@ import java.util.Date;
 
 public class datamobil extends javax.swing.JFrame {
 
+    static Connection getConnection() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     public datamobil() {
         initComponents();
         updateTableData();
